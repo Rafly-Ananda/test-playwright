@@ -1,6 +1,7 @@
-import { Browser, BrowserContext, chromium, Page } from "playwright";
+// import { Browser, BrowserContext, chromium, Page } from "playwright";
 import { PutObjectCommand, S3Client } from "@aws-sdk/client-s3";
 import { NextResponse } from "next/server";
+import puppeteer from "puppeteer";
 
 export async function POST(
   request: Request,
@@ -13,15 +14,16 @@ export async function POST(
     },
   });
 
-  let browser = await chromium.launch({ headless: true });
-  let context = await browser.newContext();
-  let page = await context.newPage();
-  console.log("a");
+  // let browser = await chromium.launch({ headless: true });
+  // let context = await browser.newContext();
+  // let page = await context.newPage();
 
+  const browser = await puppeteer.launch({ headless: "new" });
+  const page = await browser.newPage();
   await page.goto(
     `https://www.gadjahfest.com/invoice/T85SS9CY78`,
     {
-      waitUntil: "networkidle",
+      waitUntil: "networkidle0",
     },
   );
 
@@ -36,12 +38,5 @@ export async function POST(
 
   await s3Client.send(new PutObjectCommand(s3Params));
 
-  return NextResponse.json(
-    {
-      status: "Success, generated",
-    },
-    {
-      status: 201,
-    },
-  );
+  return NextResponse.json({ message: "ok" });
 }
