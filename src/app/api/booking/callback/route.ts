@@ -38,7 +38,7 @@ export async function POST(
   // };
 
   // await s3Client.send(new PutObjectCommand(s3Params));
-  console.log("a");
+  console.log("ab");
 
   const browser = await chromium.launch();
   const context = await browser.newContext();
