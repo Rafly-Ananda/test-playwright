@@ -16,6 +16,7 @@ export async function POST(
   let browser = await chromium.launch({ headless: true });
   let context = await browser.newContext();
   let page = await context.newPage();
+  console.log("a");
 
   await page.goto(
     `https://www.gadjahfest.com/invoice/T85SS9CY78`,
